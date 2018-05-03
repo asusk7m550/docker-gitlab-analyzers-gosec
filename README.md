@@ -11,8 +11,8 @@ source code and generate a compatible report.
     ```sh
     docker run \
       --interactive --tty --rm \
-      --volume "$PWD":/tmp/app \
-      registry.gitlab.com/gitlab-org/security-products/analyzers/go-ast-scanner /tmp/app
+      --volume "$PWD":/tmp/src/app \
+      registry.gitlab.com/gitlab-org/security-products/analyzers/go-ast-scanner /tmp/src/app
     ```
 
 1. The results will be stored in `go-ast-scanner-report.json` in the source code directory.
@@ -26,8 +26,8 @@ Running the analyzer:
 docker run \
   --interactive --tty --rm \
   --volume "$PWD":/analyzer \
-  --volume /path/to/source/code:/tmp/app \
-  golang /analyzer/run.sh /tmp/app
+  --volume /path/to/source/code:/tmp/src/app \
+  golang /analyzer/run.sh /tmp/src/app
 
 # Without Docker (not recommended)
 ./run.sh /path/to/source/code
