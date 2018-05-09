@@ -1,43 +1,18 @@
-# Go AST Scanner analyzer
+# GO AST Scanner analyzer
 
-GitLab Analyzer for running [Go AST Scanner](https://github.com/GoASTScanner/gas) tool on provided
-source code and generate a compatible report.
+This analyzer is a wrapper around [GO AST Scanner](https://github.com/GoASTScanner/gas),
+a tool that inspects source code for security problems by scanning the Go AST.
+It's written in Go using
+the [common library](https://gitlab.com/gitlab-org/security-products/analyzers/common)
+shared by all analyzers.
 
-## How to use
+The [common library](https://gitlab.com/gitlab-org/security-products/analyzers/common)
+contains documentation on how to run, test and modify this analyzer.
 
-1. `cd` into the directory of the source code you want to scan
-1. Run the Docker image:
+## Contributing
 
-    ```sh
-    docker run \
-      --interactive --tty --rm \
-      --volume "$PWD":/tmp/src/app \
-      registry.gitlab.com/gitlab-org/security-products/analyzers/go-ast-scanner /tmp/src/app
-    ```
+Contributions are welcome, see [`CONTRIBUTING.md`](CONTRIBUTING.md) for more details.
 
-1. The results will be stored in `go-ast-scanner-report.json` in the source code directory.
+## License
 
-## Development
-
-Running the analyzer:
-
-```sh
-# With Docker
-docker run \
-  --interactive --tty --rm \
-  --volume "$PWD":/analyzer \
-  --volume /path/to/source/code:/tmp/src/app \
-  golang /analyzer/run.sh /tmp/src/app
-
-# Without Docker (not recommended)
-./run.sh /path/to/source/code
-```
-
-## Versioning and release process
-
-TODO
-
-# Contributing
-
-If you want to help and extend the list of supported scanners, read the
-[contribution guidelines](CONTRIBUTING.md).
+This code is distributed under the MIT license, see the [LICENSE](LICENSE) file.

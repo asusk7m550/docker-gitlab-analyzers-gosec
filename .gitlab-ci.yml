@@ -1,0 +1,2 @@
+include:
+  - https://gitlab.com/gitlab-org/security-products/ci-templates/raw/master/includes-dev/analyzer.yml
