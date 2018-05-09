@@ -1,0 +1,3 @@
+analyzer
+test/fixtures/app/target
+test/fixtures/**/gl-sast-report.json

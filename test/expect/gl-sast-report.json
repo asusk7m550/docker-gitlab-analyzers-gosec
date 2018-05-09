@@ -1,0 +1,34 @@
+[
+  {
+    "tool": "go_ast_scanner",
+    "message": "this method will not auto-escape HTML. Verify data is well formed.",
+    "cve": "app/main.go:template.HTML(a):G203",
+    "file": "app/main.go",
+    "line": 16,
+    "priority": "Medium"
+  },
+  {
+    "tool": "go_ast_scanner",
+    "message": "Errors unhandled.",
+    "cve": "app/main.go:t.Execute(os.Stdout, v):G104",
+    "file": "app/main.go",
+    "line": 18,
+    "priority": "Low"
+  },
+  {
+    "tool": "go_ast_scanner",
+    "message": "Use of math/big.Int.Exp function should be audited for modulus == 0",
+    "cve": "app/main.go:z.Exp(x, y, m):G105",
+    "file": "app/main.go",
+    "line": 26,
+    "priority": "Low"
+  },
+  {
+    "tool": "go_ast_scanner",
+    "message": "Use of ssh InsecureIgnoreHostKey should be audited",
+    "cve": "app/xyz/foo.go:ssh.InsecureIgnoreHostKey():G106",
+    "file": "app/xyz/foo.go",
+    "line": 8,
+    "priority": "Medium"
+  }
+]
