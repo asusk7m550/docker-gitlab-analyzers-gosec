@@ -21,6 +21,7 @@ func main() {
 		Match:        plugin.Match,
 		Analyze:      analyze,
 		AnalyzeFlags: analyzeFlags(),
+		AnalyzeAll:   true,
 		Convert:      convert,
 	})
 
