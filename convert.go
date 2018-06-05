@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -29,16 +30,17 @@ func convert(reader io.Reader, prependPath string) ([]issue.Issue, error) {
 
 	issues := []issue.Issue{}
 	for _, w := range doc.Issues {
-		line, _ := strconv.Atoi(w.Line)
 		r := Result{w, prependPath}
 		if w.ConfidenceLevel() >= minLevel {
 			issues = append(issues, issue.Issue{
-				Tool:       toolID,
-				File:       r.Filepath(),
-				Message:    r.Details,
-				Priority:   r.Priority(),
-				Line:       line,
-				CompareKey: r.CompareKey(),
+				Tool:        toolID,
+				Category:    issue.CategorySast,
+				Message:     r.Details,
+				Severity:    Level(r.Severity),
+				Confidence:  Level(r.Confidence),
+				CompareKey:  r.CompareKey(),
+				Location:    r.Location(),
+				Identifiers: r.Identifiers(),
 			})
 		}
 	}
@@ -74,6 +76,15 @@ func (r Result) CompareKey() string {
 	return strings.Join([]string{r.Filepath(), r.Code, r.RuleID}, ":")
 }
 
+// Location returns a structured Location
+func (r Result) Location() issue.Location {
+	line, _ := strconv.Atoi(r.Line)
+	return issue.Location{
+		File:      r.Filepath(),
+		LineStart: line,
+	}
+}
+
 // Issue describes a vulnerability found in the source code.
 type Issue struct {
 	Severity   string `json:"severity"`
@@ -99,19 +110,33 @@ func (i Issue) ConfidenceLevel() int {
 	}
 }
 
-// Priority returns the normalized priority.
-func (i Issue) Priority() issue.Priority {
-	switch i.Severity {
-	case strings.ToUpper(issue.PriorityCritical):
-		return issue.PriorityCritical
-	case strings.ToUpper(issue.PriorityHigh):
-		return issue.PriorityHigh
-	case strings.ToUpper(issue.PriorityMedium):
-		return issue.PriorityMedium
-	case strings.ToUpper(issue.PriorityLow):
-		return issue.PriorityLow
-	default:
-		return issue.PriorityUnknown
+// Level returns the normalized severity or confidence.
+// GAS provides same values for both properties.
+// See https://github.com/GoASTScanner/gas/blob/master/issue.go#L63-L73
+func Level(s string) issue.Level {
+	switch s {
+	case "HIGH":
+		return issue.LevelHigh
+	case "MEDIUM":
+		return issue.LevelMedium
+	case "LOW":
+		return issue.LevelLow
 	}
-	return issue.PriorityUnknown
+	return issue.LevelUnknown
+}
+
+// Identifiers returns the normalized identifiers of the vulnerability.
+func (r Result) Identifiers() []issue.Identifier {
+	return []issue.Identifier{
+		r.GASIdentifier(),
+	}
+}
+
+// GASIdentifier returns a structured Identifier for a brakeman Warning Code
+func (r Result) GASIdentifier() issue.Identifier {
+	return issue.Identifier{
+		Type:  "gas_rule_id",
+		Name:  fmt.Sprintf("Go AST Scanner Rule ID %s", r.RuleID),
+		Value: r.RuleID,
+	}
 }
