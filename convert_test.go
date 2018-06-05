@@ -40,11 +40,22 @@ func TestConvert(t *testing.T) {
 	want := []issue.Issue{
 		{
 			Tool:       "go_ast_scanner",
+			Category:   issue.CategorySast,
 			Message:    "Use of math/big.Int.Exp function should be audited for modulus == 0",
 			CompareKey: "app/main.go:z.Exp(x, y, m):G105",
-			File:       "app/main.go",
-			Line:       15,
-			Priority:   "Low",
+			Severity:   issue.LevelLow,
+			Confidence: issue.LevelHigh,
+			Location: issue.Location{
+				File:      "app/main.go",
+				LineStart: 15,
+			},
+			Identifiers: []issue.Identifier{
+				{
+					Type:  "gas_rule_id",
+					Name:  "Go AST Scanner Rule ID G105",
+					Value: "G105",
+				},
+			},
 		},
 	}
 	got, err := convert(r, "app")

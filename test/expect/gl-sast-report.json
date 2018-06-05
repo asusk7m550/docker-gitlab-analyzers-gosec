@@ -1,34 +1,90 @@
 [
   {
     "tool": "go_ast_scanner",
+    "category": "sast",
     "message": "this method will not auto-escape HTML. Verify data is well formed.",
     "cve": "app/main.go:template.HTML(a):G203",
+    "severity": "Medium",
+    "confidence": "Low",
+    "location": {
+      "file": "app/main.go",
+      "start_line": 16
+    },
+    "identifiers": [
+      {
+        "type": "gas_rule_id",
+        "name": "Go AST Scanner Rule ID G203",
+        "value": "G203"
+      }
+    ],
+    "priority": "Medium",
     "file": "app/main.go",
-    "line": 16,
-    "priority": "Medium"
+    "line": 16
   },
   {
     "tool": "go_ast_scanner",
+    "category": "sast",
     "message": "Errors unhandled.",
     "cve": "app/main.go:t.Execute(os.Stdout, v):G104",
+    "severity": "Low",
+    "confidence": "High",
+    "location": {
+      "file": "app/main.go",
+      "start_line": 18
+    },
+    "identifiers": [
+      {
+        "type": "gas_rule_id",
+        "name": "Go AST Scanner Rule ID G104",
+        "value": "G104"
+      }
+    ],
+    "priority": "Low",
     "file": "app/main.go",
-    "line": 18,
-    "priority": "Low"
+    "line": 18
   },
   {
     "tool": "go_ast_scanner",
+    "category": "sast",
     "message": "Use of math/big.Int.Exp function should be audited for modulus == 0",
     "cve": "app/main.go:z.Exp(x, y, m):G105",
+    "severity": "Low",
+    "confidence": "High",
+    "location": {
+      "file": "app/main.go",
+      "start_line": 26
+    },
+    "identifiers": [
+      {
+        "type": "gas_rule_id",
+        "name": "Go AST Scanner Rule ID G105",
+        "value": "G105"
+      }
+    ],
+    "priority": "Low",
     "file": "app/main.go",
-    "line": 26,
-    "priority": "Low"
+    "line": 26
   },
   {
     "tool": "go_ast_scanner",
+    "category": "sast",
     "message": "Use of ssh InsecureIgnoreHostKey should be audited",
     "cve": "app/xyz/foo.go:ssh.InsecureIgnoreHostKey():G106",
+    "severity": "Medium",
+    "confidence": "High",
+    "location": {
+      "file": "app/xyz/foo.go",
+      "start_line": 8
+    },
+    "identifiers": [
+      {
+        "type": "gas_rule_id",
+        "name": "Go AST Scanner Rule ID G106",
+        "value": "G106"
+      }
+    ],
+    "priority": "Medium",
     "file": "app/xyz/foo.go",
-    "line": 8,
-    "priority": "Medium"
+    "line": 8
   }
 ]
