@@ -26,8 +26,8 @@ func analyze(c *cli.Context, path string) (io.ReadCloser, error) {
 
 	var setupCmd = func(cmd *exec.Cmd) *exec.Cmd {
 		cmd.Env = os.Environ()
-		cmd.Stdout = c.App.Writer
-		cmd.Stderr = c.App.Writer
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
 		return cmd
 	}
 
