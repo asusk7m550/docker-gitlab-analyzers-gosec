@@ -7,6 +7,7 @@ These "stable" Docker images may be updated after release date, changes are adde
 ## 11-2-stable
 
 ## 11-1-stable
+- Show command error output
 
 ## 11-0-stable
 - Enrich report with more data
