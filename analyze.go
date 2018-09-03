@@ -12,8 +12,8 @@ const (
 	pathPkg    = "app"
 	pathGoSrc  = "/go/src"
 	pathGoPkg  = pathGoSrc + "/" + pathPkg
-	pathOutput = "/tmp/gas.json"
-	pathGAS    = "/go/bin/gas"
+	pathOutput = "/tmp/gosec.json"
+	pathGosec  = "/go/bin/gosec"
 )
 
 func analyzeFlags() []cli.Flag {
@@ -33,7 +33,7 @@ func analyze(c *cli.Context, path string) (io.ReadCloser, error) {
 
 	// We don't control the directory where the source code is mounted
 	// but Go requires the code to be within $GOPATH.
-	// We could create a symlink but that wouldn't work with GAS,
+	// We could create a symlink but that wouldn't work with Gosec,
 	// so we have to copy all the project source code
 	// to some directory under $GOPATH/src.
 	// TODO: make it possible to specify the exact path of the package.
@@ -43,7 +43,7 @@ func analyze(c *cli.Context, path string) (io.ReadCloser, error) {
 		return nil, err
 	}
 
-	// GAS needs the dependency to be fetched.
+	// Gosec needs the dependency to be fetched.
 	cmd = setupCmd(exec.Command("go", "get", "./..."))
 	cmd.Dir = pathGoPkg
 	err = cmd.Run()
@@ -51,11 +51,11 @@ func analyze(c *cli.Context, path string) (io.ReadCloser, error) {
 		return nil, err
 	}
 
-	// NOTE: GAS exit with status 1 if some vulnerabilities have been found.
+	// NOTE: Gosec exit with status 1 if some vulnerabilities have been found.
 	// This can be disabled by setting the -quiet flag but then
-	// GAS returns no output when it can't find any vulnerability.
-	// See https://github.com/GoASTScanner/gas/blob/master/cmd/gas/main.go
-	cmd = setupCmd(exec.Command(pathGAS, "-fmt=json", "-out="+pathOutput, "./..."))
+	// Gosec returns no output when it can't find any vulnerability.
+	// See https://github.com/securego/gosec/blob/master/cmd/gosec/main.go
+	cmd = setupCmd(exec.Command(pathGosec, "-fmt=json", "-out="+pathOutput, "./..."))
 	cmd.Dir = pathGoPkg
 	cmd.Run()
 	return os.Open(pathOutput)

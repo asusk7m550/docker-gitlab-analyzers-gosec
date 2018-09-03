@@ -1,6 +1,6 @@
-# GO AST Scanner analyzer
+# Gosec analyzer
 
-This analyzer is a wrapper around [GO AST Scanner](https://github.com/GoASTScanner/gas),
+This analyzer is a wrapper around [gosec](https://github.com/securego/gosec),
 a tool that inspects source code for security problems by scanning the Go AST.
 It's written in Go using
 the [common library](https://gitlab.com/gitlab-org/security-products/analyzers/common)

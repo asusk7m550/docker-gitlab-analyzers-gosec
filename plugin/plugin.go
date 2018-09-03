@@ -15,5 +15,5 @@ func Match(path string, info os.FileInfo) (bool, error) {
 }
 
 func init() {
-	plugin.Register("go-ast-scanner", Match)
+	plugin.Register("gosec", Match)
 }

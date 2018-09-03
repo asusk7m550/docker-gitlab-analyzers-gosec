@@ -12,9 +12,12 @@ import (
 	"gitlab.com/gitlab-org/security-products/analyzers/common/issue"
 )
 
-const toolID = "go_ast_scanner"
+const toolID = "gosec"
 
-const envVarConfidenceLevel = "SAST_GO_AST_SCANNER_LEVEL"
+// This tool was previously named GO_AST_SCANNER.
+// backward compatibility
+const legacyEnvVarConfidenceLevel = "SAST_GO_AST_SCANNER_LEVEL"
+const envVarConfidenceLevel = "SAST_GOSEC_LEVEL"
 
 func convert(reader io.Reader, prependPath string) ([]issue.Issue, error) {
 	var doc = struct {
@@ -48,9 +51,11 @@ func convert(reader io.Reader, prependPath string) ([]issue.Issue, error) {
 }
 
 func minConfidenceLevel() int {
-	value := os.Getenv(envVarConfidenceLevel)
-	if value == "" {
-		return 0
+	var value string
+	if value = os.Getenv(envVarConfidenceLevel); value == "" {
+		if value = os.Getenv(legacyEnvVarConfidenceLevel); value == "" {
+			return 0
+		}
 	}
 	level, err := strconv.Atoi(value)
 	if err != nil || level > 3 || level < 0 {
@@ -111,8 +116,8 @@ func (i Issue) ConfidenceLevel() int {
 }
 
 // Level returns the normalized severity or confidence.
-// GAS provides same values for both properties.
-// See https://github.com/GoASTScanner/gas/blob/master/issue.go#L63-L73
+// Gosec provides same values for both properties.
+// See https://github.com/securego/gosec/blob/893b87b34342eadd448aba7638c5cc25f7ad26dd/issue.go#L63-L73
 func Level(s string) issue.Level {
 	switch s {
 	case "HIGH":
@@ -128,15 +133,15 @@ func Level(s string) issue.Level {
 // Identifiers returns the normalized identifiers of the vulnerability.
 func (r Result) Identifiers() []issue.Identifier {
 	return []issue.Identifier{
-		r.GASIdentifier(),
+		r.GosecIdentifier(),
 	}
 }
 
-// GASIdentifier returns a structured Identifier for a brakeman Warning Code
-func (r Result) GASIdentifier() issue.Identifier {
+// GosecIdentifier returns a structured Identifier for a brakeman Warning Code
+func (r Result) GosecIdentifier() issue.Identifier {
 	return issue.Identifier{
-		Type:  "gas_rule_id",
-		Name:  fmt.Sprintf("Go AST Scanner Rule ID %s", r.RuleID),
+		Type:  "gosec_rule_id",
+		Name:  fmt.Sprintf("Gosec Rule ID %s", r.RuleID),
 		Value: r.RuleID,
 	}
 }
