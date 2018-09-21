@@ -12,7 +12,10 @@ import (
 	"gitlab.com/gitlab-org/security-products/analyzers/common/issue"
 )
 
-const toolID = "gosec"
+const (
+	scannerID   = "gosec"
+	scannerName = "Gosec"
+)
 
 // This tool was previously named GO_AST_SCANNER.
 // backward compatibility
@@ -31,13 +34,18 @@ func convert(reader io.Reader, prependPath string) ([]issue.Issue, error) {
 
 	minLevel := minConfidenceLevel() // TODO: extract level from cli context
 
+	var scanner = issue.Scanner{
+		ID:   scannerID,
+		Name: scannerName,
+	}
+
 	issues := []issue.Issue{}
 	for _, w := range doc.Issues {
 		r := Result{w, prependPath}
 		if w.ConfidenceLevel() >= minLevel {
 			issues = append(issues, issue.Issue{
-				Tool:        toolID,
 				Category:    issue.CategorySast,
+				Scanner:     scanner,
 				Message:     r.Details,
 				Severity:    Level(r.Severity),
 				Confidence:  Level(r.Confidence),

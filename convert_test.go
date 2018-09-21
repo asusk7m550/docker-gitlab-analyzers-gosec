@@ -40,11 +40,17 @@ func TestConvert(t *testing.T) {
 				}
 				]
 			}`
+
+			var scanner = issue.Scanner{
+				ID:   scannerID,
+				Name: scannerName,
+			}
+
 			r := strings.NewReader(in)
 			want := []issue.Issue{
 				{
-					Tool:       "gosec",
 					Category:   issue.CategorySast,
+					Scanner:    scanner,
 					Message:    "Use of math/big.Int.Exp function should be audited for modulus == 0",
 					CompareKey: "app/main.go:z.Exp(x, y, m):G105",
 					Severity:   issue.LevelLow,
