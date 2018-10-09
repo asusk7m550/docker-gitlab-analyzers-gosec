@@ -5,6 +5,7 @@ GitLab Gosec analyzer follows versioning of GitLab (`MAJOR.MINOR` only) and gene
 These "stable" Docker images may be updated after release date, changes are added to the corresponding section bellow.
 
 ## 11-4-stable
+- Add `Scanner` property and deprecate `Tool`
 
 ## 11-3-stable
 - Rename this analyzer to gosec from Go AST Scanner (https://gitlab.com/gitlab-org/gitlab-ee/issues/6999)
