@@ -1,7 +1,6 @@
-FROM golang
+FROM securego/gosec:1.2.0
 
-RUN apt-get update && apt-get install -y ssh
-RUN go get github.com/securego/gosec/cmd/gosec/...
+RUN apk --no-cache add git
 COPY /analyzer /
 ENTRYPOINT []
 CMD ["/analyzer", "run"]
