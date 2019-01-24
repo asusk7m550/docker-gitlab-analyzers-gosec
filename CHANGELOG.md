@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v1.5.0 (unreleased)
+- Build Docker image on top of securego/gosec:1.2.0
+
 ## v1.4.0
 - Add `Scanner` property and deprecate `Tool`
 
