@@ -13,7 +13,7 @@ const (
 	pathGoSrc  = "/go/src"
 	pathGoPkg  = pathGoSrc + "/" + pathPkg
 	pathOutput = "/tmp/gosec.json"
-	pathGosec  = "/go/bin/gosec"
+	pathGosec  = "/usr/local/bin/gosec"
 )
 
 func analyzeFlags() []cli.Flag {
