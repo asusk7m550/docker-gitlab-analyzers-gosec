@@ -1,106 +1,106 @@
-[
-  {
-    "category": "sast",
-    "message": "this method will not auto-escape HTML. Verify data is well formed.",
-    "cve": "app/main.go:template.HTML(a):G203",
-    "severity": "Medium",
-    "confidence": "Low",
-    "scanner": {
-      "id": "gosec",
-      "name": "Gosec"
+{
+  "version": "2.0",
+  "vulnerabilities": [
+    {
+      "category": "sast",
+      "message": "this method will not auto-escape HTML. Verify data is well formed.",
+      "cve": "app/main.go:template.HTML(a):G203",
+      "severity": "Medium",
+      "confidence": "Low",
+      "scanner": {
+        "id": "gosec",
+        "name": "Gosec"
+      },
+      "location": {
+        "file": "app/main.go",
+        "start_line": 16,
+        "dependency": {
+          "package": {}
+        }
+      },
+      "identifiers": [
+        {
+          "type": "gosec_rule_id",
+          "name": "Gosec Rule ID G203",
+          "value": "G203"
+        }
+      ]
     },
-    "location": {
-      "file": "app/main.go",
-      "start_line": 16
+    {
+      "category": "sast",
+      "message": "Use of ssh InsecureIgnoreHostKey should be audited",
+      "cve": "app/xyz/foo.go:ssh.InsecureIgnoreHostKey():G106",
+      "severity": "Medium",
+      "confidence": "High",
+      "scanner": {
+        "id": "gosec",
+        "name": "Gosec"
+      },
+      "location": {
+        "file": "app/xyz/foo.go",
+        "start_line": 8,
+        "dependency": {
+          "package": {}
+        }
+      },
+      "identifiers": [
+        {
+          "type": "gosec_rule_id",
+          "name": "Gosec Rule ID G106",
+          "value": "G106"
+        }
+      ]
     },
-    "identifiers": [
-      {
-        "type": "gosec_rule_id",
-        "name": "Gosec Rule ID G203",
-        "value": "G203"
-      }
-    ],
-    "priority": "Medium",
-    "file": "app/main.go",
-    "line": 16,
-    "tool": "gosec"
-  },
-  {
-    "category": "sast",
-    "message": "Use of ssh InsecureIgnoreHostKey should be audited",
-    "cve": "app/xyz/foo.go:ssh.InsecureIgnoreHostKey():G106",
-    "severity": "Medium",
-    "confidence": "High",
-    "scanner": {
-      "id": "gosec",
-      "name": "Gosec"
+    {
+      "category": "sast",
+      "message": "Errors unhandled.",
+      "cve": "app/main.go:t.Execute(os.Stdout, v):G104",
+      "severity": "Low",
+      "confidence": "High",
+      "scanner": {
+        "id": "gosec",
+        "name": "Gosec"
+      },
+      "location": {
+        "file": "app/main.go",
+        "start_line": 18,
+        "dependency": {
+          "package": {}
+        }
+      },
+      "identifiers": [
+        {
+          "type": "gosec_rule_id",
+          "name": "Gosec Rule ID G104",
+          "value": "G104"
+        }
+      ]
     },
-    "location": {
-      "file": "app/xyz/foo.go",
-      "start_line": 8
-    },
-    "identifiers": [
-      {
-        "type": "gosec_rule_id",
-        "name": "Gosec Rule ID G106",
-        "value": "G106"
-      }
-    ],
-    "priority": "Medium",
-    "file": "app/xyz/foo.go",
-    "line": 8,
-    "tool": "gosec"
-  },
-  {
-    "category": "sast",
-    "message": "Errors unhandled.",
-    "cve": "app/main.go:t.Execute(os.Stdout, v):G104",
-    "severity": "Low",
-    "confidence": "High",
-    "scanner": {
-      "id": "gosec",
-      "name": "Gosec"
-    },
-    "location": {
-      "file": "app/main.go",
-      "start_line": 18
-    },
-    "identifiers": [
-      {
-        "type": "gosec_rule_id",
-        "name": "Gosec Rule ID G104",
-        "value": "G104"
-      }
-    ],
-    "priority": "Low",
-    "file": "app/main.go",
-    "line": 18,
-    "tool": "gosec"
-  },
-  {
-    "category": "sast",
-    "message": "Use of math/big.Int.Exp function should be audited for modulus == 0",
-    "cve": "app/main.go:z.Exp(x, y, m):G105",
-    "severity": "Low",
-    "confidence": "High",
-    "scanner": {
-      "id": "gosec",
-      "name": "Gosec"
-    },
-    "location": {
-      "file": "app/main.go",
-      "start_line": 26
-    },
-    "identifiers": [
-      {
-        "type": "gosec_rule_id",
-        "name": "Gosec Rule ID G105",
-        "value": "G105"
-      }
-    ],
-    "priority": "Low",
-    "file": "app/main.go",
-    "line": 26,
-    "tool": "gosec"
-  }
-]
+    {
+      "category": "sast",
+      "message": "Use of math/big.Int.Exp function should be audited for modulus == 0",
+      "cve": "app/main.go:z.Exp(x, y, m):G105",
+      "severity": "Low",
+      "confidence": "High",
+      "scanner": {
+        "id": "gosec",
+        "name": "Gosec"
+      },
+      "location": {
+        "file": "app/main.go",
+        "start_line": 26,
+        "dependency": {
+          "package": {}
+        }
+      },
+      "identifiers": [
+        {
+          "type": "gosec_rule_id",
+          "name": "Gosec Rule ID G105",
+          "value": "G105"
+        }
+      ]
+    }
+  ],
+  "remediations": []
+}

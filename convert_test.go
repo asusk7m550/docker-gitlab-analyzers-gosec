@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"gitlab.com/gitlab-org/security-products/analyzers/common/issue"
+	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/issue"
 )
 
 func TestConvert(t *testing.T) {
@@ -47,26 +47,30 @@ func TestConvert(t *testing.T) {
 			}
 
 			r := strings.NewReader(in)
-			want := []issue.Issue{
-				{
-					Category:   issue.CategorySast,
-					Scanner:    scanner,
-					Message:    "Use of math/big.Int.Exp function should be audited for modulus == 0",
-					CompareKey: "app/main.go:z.Exp(x, y, m):G105",
-					Severity:   issue.LevelLow,
-					Confidence: issue.LevelHigh,
-					Location: issue.Location{
-						File:      "app/main.go",
-						LineStart: 15,
-					},
-					Identifiers: []issue.Identifier{
-						{
-							Type:  "gosec_rule_id",
-							Name:  "Gosec Rule ID G105",
-							Value: "G105",
+			want := &issue.Report{
+				Version: issue.CurrentVersion(),
+				Vulnerabilities: []issue.Issue{
+					{
+						Category:   issue.CategorySast,
+						Scanner:    scanner,
+						Message:    "Use of math/big.Int.Exp function should be audited for modulus == 0",
+						CompareKey: "app/main.go:z.Exp(x, y, m):G105",
+						Severity:   issue.LevelLow,
+						Confidence: issue.LevelHigh,
+						Location: issue.Location{
+							File:      "app/main.go",
+							LineStart: 15,
+						},
+						Identifiers: []issue.Identifier{
+							{
+								Type:  "gosec_rule_id",
+								Name:  "Gosec Rule ID G105",
+								Value: "G105",
+							},
 						},
 					},
 				},
+				Remediations: []issue.Remediation{},
 			}
 			got, err := convert(r, "app")
 			if err != nil {

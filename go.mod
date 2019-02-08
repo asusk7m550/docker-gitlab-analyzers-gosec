@@ -1,9 +1,8 @@
-module gitlab.com/gitlab-org/security-products/analyzers/gosec
+module gitlab.com/gitlab-org/security-products/analyzers/gosec/v2
 
 require (
-	github.com/koron/iferr v0.0.0-20180615142939-bb332a3b1d91 // indirect
-	github.com/stamblerre/gocode v0.0.0-20181212030458-2f9d39d8f31d // indirect
 	github.com/urfave/cli v1.20.0
-	gitlab.com/gitlab-org/security-products/analyzers/common v1.6.0
-	golang.org/x/tools v0.0.0-20190122202912-9c309ee22fab // indirect
+	gitlab.com/gitlab-org/security-products/analyzers/common/v2 v2.1.3
+	golang.org/x/crypto v0.0.0-20190131182504-b8fe1690c613
+	golang.org/x/sys v0.0.0-20190204203706-41f3e6584952 // indirect
 )
