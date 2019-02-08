@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"gitlab.com/gitlab-org/security-products/analyzers/common/plugin"
+	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/plugin"
 )
 
 func Match(path string, info os.FileInfo) (bool, error) {

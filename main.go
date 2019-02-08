@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
-	"gitlab.com/gitlab-org/security-products/analyzers/common/command"
-	"gitlab.com/gitlab-org/security-products/analyzers/gosec/plugin"
+	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/command"
+	"gitlab.com/gitlab-org/security-products/analyzers/gosec/v2/plugin"
 )
 
 func main() {

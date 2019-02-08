@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"gitlab.com/gitlab-org/security-products/analyzers/common/issue"
+	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/issue"
 )
 
 const (
@@ -22,7 +22,7 @@ const (
 const legacyEnvVarConfidenceLevel = "SAST_GO_AST_SCANNER_LEVEL"
 const envVarConfidenceLevel = "SAST_GOSEC_LEVEL"
 
-func convert(reader io.Reader, prependPath string) ([]issue.Issue, error) {
+func convert(reader io.Reader, prependPath string) (*issue.Report, error) {
 	var doc = struct {
 		Issues []Issue
 	}{}
@@ -55,7 +55,10 @@ func convert(reader io.Reader, prependPath string) ([]issue.Issue, error) {
 			})
 		}
 	}
-	return issues, nil
+
+	report := issue.NewReport()
+	report.Vulnerabilities = issues
+	return &report, nil
 }
 
 func minConfidenceLevel() int {

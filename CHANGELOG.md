@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.0.0
+- Switch to new report syntax with `version` field
+
 ## v1.5.0 (unreleased)
 - Build Docker image on top of securego/gosec:1.2.0
 
