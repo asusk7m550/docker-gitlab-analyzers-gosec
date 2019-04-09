@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.0.1
+- Update common to v2.1.6
+
 ## v2.0.0
 - Switch to new report syntax with `version` field
 
