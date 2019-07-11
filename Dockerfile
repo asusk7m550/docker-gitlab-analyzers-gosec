@@ -1,4 +1,4 @@
-FROM securego/gosec:1.2.0
+FROM securego/gosec:2.0.0
 
 RUN apk --no-cache add git
 COPY /analyzer /

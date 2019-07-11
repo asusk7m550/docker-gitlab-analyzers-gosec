@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.1.0
+- Build Docker image on top of securego/gosec:2.0.0 (!16 @bartjkdp)
+
 ## v2.0.1
 - Update common to v2.1.6
 
