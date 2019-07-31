@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
+	"path"
 
 	"github.com/urfave/cli"
 )
@@ -13,14 +15,14 @@ const (
 	pathGoSrc  = "/go/src"
 	pathGoPkg  = pathGoSrc + "/" + pathPkg
 	pathOutput = "/tmp/gosec.json"
-	pathGosec  = "/usr/local/bin/gosec"
+	pathGosec  = "/bin/gosec"
 )
 
 func analyzeFlags() []cli.Flag {
 	return []cli.Flag{}
 }
 
-func analyze(c *cli.Context, path string) (io.ReadCloser, error) {
+func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	var cmd *exec.Cmd
 	var err error
 
@@ -31,13 +33,21 @@ func analyze(c *cli.Context, path string) (io.ReadCloser, error) {
 		return cmd
 	}
 
+	// Infer if Go modules need to be disabled.
+	_, err = os.Stat(path.Join(projectPath, "go.mod"))
+	if os.IsNotExist(err) {
+		fmt.Println("Could not find go.mod in project root. Disabling Go modules support by setting GO111MODULE=off.")
+		os.Setenv("GO111MODULE", "off")
+	}
+
 	// We don't control the directory where the source code is mounted
 	// but Go requires the code to be within $GOPATH.
 	// We could create a symlink but that wouldn't work with Gosec,
 	// so we have to copy all the project source code
 	// to some directory under $GOPATH/src.
 	// TODO: make it possible to specify the exact path of the package.
-	cmd = setupCmd(exec.Command("cp", "-r", path, pathGoPkg))
+	// FIXME: this copy should be necessary when go modules are disabled
+	cmd = setupCmd(exec.Command("cp", "-r", projectPath, pathGoPkg))
 	err = cmd.Run()
 	if err != nil {
 		return nil, err
