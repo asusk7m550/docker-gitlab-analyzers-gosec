@@ -148,7 +148,7 @@ func (r Result) Identifiers() []issue.Identifier {
 	}
 }
 
-// GosecIdentifier returns a structured Identifier for a brakeman Warning Code
+// GosecIdentifier returns a structured Identifier.
 func (r Result) GosecIdentifier() issue.Identifier {
 	return issue.Identifier{
 		Type:  "gosec_rule_id",
