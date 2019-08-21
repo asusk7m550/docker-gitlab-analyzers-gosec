@@ -150,9 +150,27 @@ func (r Result) Identifiers() []issue.Identifier {
 
 // GosecIdentifier returns a structured Identifier.
 func (r Result) GosecIdentifier() issue.Identifier {
-	return issue.Identifier{
+	identifier := issue.Identifier{
 		Type:  "gosec_rule_id",
 		Name:  fmt.Sprintf("Gosec Rule ID %s", r.RuleID),
 		Value: r.RuleID,
 	}
+
+	if url, ok := urls[r.RuleID]; ok {
+		identifier.URL = url
+	}
+
+	return identifier
+}
+
+// URLs for select rules
+// Mapping to be replaced with https://github.com/securego/gosec/issues/127
+var urls = map[string]string {
+	"G101": "https://securego.io/docs/rules/g101.html",
+	"G102": "https://securego.io/docs/rules/g102.html",
+	"G103": "https://securego.io/docs/rules/g103.html",
+	"G104": "https://securego.io/docs/rules/g104.html",
+	"G107": "https://securego.io/docs/rules/g107.html",
+	"G201": "https://securego.io/docs/rules/g201-g202.html",
+	"G202": "https://securego.io/docs/rules/g201-g202.html",
 }
