@@ -72,7 +72,8 @@
         {
           "type": "gosec_rule_id",
           "name": "Gosec Rule ID G104",
-          "value": "G104"
+          "value": "G104",
+          "url": "https://securego.io/docs/rules/g104.html"
         }
       ]
     },
