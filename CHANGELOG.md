@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.2.0
+- Build Docker image on top of securego/gosec:v2.1.0 (!21 @bartjkdp)
+
 ## v2.1.1
 - Add rule URLs for G101, G102, G103, G104, G107, G201, & G202
 

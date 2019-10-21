@@ -76,31 +76,6 @@
           "url": "https://securego.io/docs/rules/g104.html"
         }
       ]
-    },
-    {
-      "category": "sast",
-      "message": "Use of math/big.Int.Exp function should be audited for modulus == 0",
-      "cve": "app/main.go:z.Exp(x, y, m):G105",
-      "severity": "Low",
-      "confidence": "High",
-      "scanner": {
-        "id": "gosec",
-        "name": "Gosec"
-      },
-      "location": {
-        "file": "app/main.go",
-        "start_line": 26,
-        "dependency": {
-          "package": {}
-        }
-      },
-      "identifiers": [
-        {
-          "type": "gosec_rule_id",
-          "name": "Gosec Rule ID G105",
-          "value": "G105"
-        }
-      ]
     }
   ],
   "remediations": []

@@ -1,11 +1,11 @@
-FROM golang:1.12 AS build
+FROM golang:1.13 AS build
 # Force the go compiler to use modules
 ENV GO111MODULE=on CGO_ENABLED=0 GOOS=linux
 WORKDIR /go/src/app
 COPY . .
 RUN go build -o analyzer
 
-FROM securego/gosec:2.0.0
+FROM securego/gosec:v2.1.0
 
 RUN apk --no-cache add git
 
