@@ -20,15 +20,41 @@ func TestConvert(t *testing.T) {
 			os.Setenv(envLevel, "3")
 			in := `{
 				"Issues": [
-				{
-					"severity": "LOW",
-					"confidence": "LOW",
-					"rule_id": "xyz",
-					"details": "xyz",
-					"file": "/go/src/app/main.go",
-					"code": "xyz",
-					"line": "1"
-				},
+					{
+							"severity": "MEDIUM",
+							"confidence": "HIGH",
+							"cwe": {
+									"ID": "327",
+									"URL": "https://cwe.mitre.org/data/definitions/327.html"
+							},
+							"rule_id": "G501",
+							"details": "Blacklisted import crypto/md5: weak cryptographic primitive",
+							"file": "/go/src/app/main.go",
+							"code": "\"crypto/md5\"",
+							"line": "15"
+					},
+					{
+							"severity": "MEDIUM",
+							"confidence": "HIGH",
+							"cwe": {
+									"ID": "326",
+									"URL": "https://cwe.mitre.org/data/definitions/326.html"
+							},
+							"rule_id": "G401",
+							"details": "Use of weak cryptographic primitive",
+							"file": "/go/src/app/main.go",
+							"code": "md5.New()",
+							"line": "11"
+					},
+					{
+						"severity": "LOW",
+						"confidence": "LOW",
+						"rule_id": "xyz",
+						"details": "xyz",
+						"file": "/go/src/app/main.go",
+						"code": "xyz",
+						"line": "1"
+					},
 				{
 					"severity": "LOW",
 					"confidence": "HIGH",
@@ -38,6 +64,7 @@ func TestConvert(t *testing.T) {
 					"code": "z.Exp(x, y, m)",
 					"line": "15"
 				}
+
 				]
 			}`
 
@@ -51,12 +78,70 @@ func TestConvert(t *testing.T) {
 				Version: issue.CurrentVersion(),
 				Vulnerabilities: []issue.Issue{
 					{
-						Category:   issue.CategorySast,
-						Scanner:    scanner,
-						Message:    "Use of math/big.Int.Exp function should be audited for modulus == 0",
-						CompareKey: "app/main.go:z.Exp(x, y, m):G105",
-						Severity:   issue.LevelLow,
-						Confidence: issue.LevelHigh,
+						Category:    issue.CategorySast,
+						Name:        "Use of a Broken or Risky Cryptographic Algorithm",
+						Scanner:     scanner,
+						Message:     "Blacklisted import crypto/md5: weak cryptographic primitive",
+						Description: "The use of a broken or risky cryptographic algorithm is an unnecessary risk that may result in the exposure of sensitive information.",
+						CompareKey:  "app/main.go:15:\"crypto/md5\":CWE-327",
+						Severity:    issue.LevelMedium,
+						Confidence:  issue.LevelHigh,
+						Location: issue.Location{
+							File:      "app/main.go",
+							LineStart: 15,
+						},
+						Identifiers: []issue.Identifier{
+							{
+								Type:  "gosec_rule_id",
+								Name:  "Gosec Rule ID G501",
+								Value: "G501",
+								URL:   "",
+							},
+							{
+								Type:  "CWE",
+								Name:  "CWE-327",
+								Value: "327",
+								URL:   "https://cwe.mitre.org/data/definitions/327.html",
+							},
+						},
+					},
+					{
+						Category:    issue.CategorySast,
+						Name:        "Inadequate Encryption Strength",
+						Scanner:     scanner,
+						Message:     "Use of weak cryptographic primitive",
+						Description: "The software stores or transmits sensitive data using an encryption scheme that is theoretically sound, but is not strong enough for the level of protection required.",
+						CompareKey:  "app/main.go:11:md5.New():CWE-326",
+						Severity:    issue.LevelMedium,
+						Confidence:  issue.LevelHigh,
+						Location: issue.Location{
+							File:      "app/main.go",
+							LineStart: 11,
+						},
+						Identifiers: []issue.Identifier{
+							{
+								Type:  "gosec_rule_id",
+								Name:  "Gosec Rule ID G401",
+								Value: "G401",
+								URL:   "",
+							},
+							{
+								Type:  "CWE",
+								Name:  "CWE-326",
+								Value: "326",
+								URL:   "https://cwe.mitre.org/data/definitions/326.html",
+							},
+						},
+					},
+					{
+						Category:    issue.CategorySast,
+						Name:        "Gosec Rule G105",
+						Scanner:     scanner,
+						Message:     "Use of math/big.Int.Exp function should be audited for modulus == 0",
+						Description: "Use of math/big.Int.Exp function should be audited for modulus == 0",
+						CompareKey:  "app/main.go:15:z.Exp(x, y, m):G105",
+						Severity:    issue.LevelLow,
+						Confidence:  issue.LevelHigh,
 						Location: issue.Location{
 							File:      "app/main.go",
 							LineStart: 15,
@@ -66,6 +151,7 @@ func TestConvert(t *testing.T) {
 								Type:  "gosec_rule_id",
 								Name:  "Gosec Rule ID G105",
 								Value: "G105",
+								URL:   "",
 							},
 						},
 					},
@@ -79,7 +165,6 @@ func TestConvert(t *testing.T) {
 			if !reflect.DeepEqual(want, got) {
 				t.Errorf("Wrong result. Expected:\n%#v\nbut got:\n%#v", want, got)
 			}
-
 		})
 	}
 }
