@@ -2,6 +2,7 @@ variables:
   REPORT_FILENAME: gl-sast-report.json
   MAJOR: 2
   MAX_IMAGE_SIZE_BYTE: 157286400
-  
+  MAX_SCAN_DURATION_SECONDS: 72
+
 include:
   - https://gitlab.com/gitlab-org/security-products/ci-templates/raw/master/includes-dev/analyzer.yml
