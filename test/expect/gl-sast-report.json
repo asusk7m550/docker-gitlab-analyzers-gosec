@@ -3,8 +3,10 @@
   "vulnerabilities": [
     {
       "category": "sast",
+      "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
       "message": "this method will not auto-escape HTML. Verify data is well formed.",
-      "cve": "app/main.go:template.HTML(a):G203",
+      "description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users.",
+      "cve": "app/main.go:16:template.HTML(a):CWE-79",
       "severity": "Medium",
       "confidence": "Low",
       "scanner": {
@@ -23,13 +25,21 @@
           "type": "gosec_rule_id",
           "name": "Gosec Rule ID G203",
           "value": "G203"
+        },
+        {
+          "type": "CWE",
+          "name": "CWE-79",
+          "value": "79",
+          "url": "https://cwe.mitre.org/data/definitions/79.html"
         }
       ]
     },
     {
       "category": "sast",
+      "name": "Key Exchange without Entity Authentication",
       "message": "Use of ssh InsecureIgnoreHostKey should be audited",
-      "cve": "app/xyz/foo.go:ssh.InsecureIgnoreHostKey():G106",
+      "description": "The software performs a key exchange with an actor without verifying the identity of that actor.",
+      "cve": "app/xyz/foo.go:8:ssh.InsecureIgnoreHostKey():CWE-322",
       "severity": "Medium",
       "confidence": "High",
       "scanner": {
@@ -48,13 +58,21 @@
           "type": "gosec_rule_id",
           "name": "Gosec Rule ID G106",
           "value": "G106"
+        },
+        {
+          "type": "CWE",
+          "name": "CWE-322",
+          "value": "322",
+          "url": "https://cwe.mitre.org/data/definitions/322.html"
         }
       ]
     },
     {
       "category": "sast",
+      "name": "Improper Check or Handling of Exceptional Conditions",
       "message": "Errors unhandled.",
-      "cve": "app/main.go:t.Execute(os.Stdout, v):G104",
+      "description": "The software does not properly anticipate or handle exceptional conditions that rarely occur during normal operation of the software.",
+      "cve": "app/main.go:18:t.Execute(os.Stdout, v):CWE-703",
       "severity": "Low",
       "confidence": "High",
       "scanner": {
@@ -74,6 +92,12 @@
           "name": "Gosec Rule ID G104",
           "value": "G104",
           "url": "https://securego.io/docs/rules/g104.html"
+        },
+        {
+          "type": "CWE",
+          "name": "CWE-703",
+          "value": "703",
+          "url": "https://cwe.mitre.org/data/definitions/703.html"
         }
       ]
     }

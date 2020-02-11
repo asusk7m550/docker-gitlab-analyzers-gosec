@@ -5,7 +5,7 @@ WORKDIR /go/src/app
 COPY . .
 RUN go build -o analyzer
 
-FROM securego/gosec:v2.1.0
+FROM securego/gosec:v2.2.0
 
 RUN apk --no-cache add git
 

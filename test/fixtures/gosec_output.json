@@ -1,8 +1,26 @@
 {
+	"Golang errors": {},
 	"Issues": [
 		{
 			"severity": "MEDIUM",
+			"confidence": "HIGH",
+			"cwe": {
+				"ID": "322",
+				"URL": "https://cwe.mitre.org/data/definitions/322.html"
+			},
+			"rule_id": "G106",
+			"details": "Use of ssh InsecureIgnoreHostKey should be audited",
+			"file": "/app/tmp/go-app/xyz/foo.go",
+			"code": "ssh.InsecureIgnoreHostKey()",
+			"line": "8"
+		},
+		{
+			"severity": "MEDIUM",
 			"confidence": "LOW",
+			"cwe": {
+				"ID": "79",
+				"URL": "https://cwe.mitre.org/data/definitions/79.html"
+			},
 			"rule_id": "G203",
 			"details": "this method will not auto-escape HTML. Verify data is well formed.",
 			"file": "/app/tmp/go-app/main.go",
@@ -12,35 +30,21 @@
 		{
 			"severity": "LOW",
 			"confidence": "HIGH",
+			"cwe": {
+				"ID": "703",
+				"URL": "https://cwe.mitre.org/data/definitions/703.html"
+			},
 			"rule_id": "G104",
 			"details": "Errors unhandled.",
 			"file": "/app/tmp/go-app/main.go",
 			"code": "t.Execute(os.Stdout, v)",
 			"line": "18"
-		},
-		{
-			"severity": "LOW",
-			"confidence": "HIGH",
-			"rule_id": "G105",
-			"details": "Use of math/big.Int.Exp function should be audited for modulus == 0",
-			"file": "/app/tmp/go-app/main.go",
-			"code": "z.Exp(x, y, m)",
-			"line": "26"
-		},
-		{
-			"severity": "MEDIUM",
-			"confidence": "HIGH",
-			"rule_id": "G106",
-			"details": "Use of ssh InsecureIgnoreHostKey should be audited",
-			"file": "/app/tmp/go-app/xyz/foo.go",
-			"code": "ssh.InsecureIgnoreHostKey()",
-			"line": "8"
 		}
 	],
 	"Stats": {
 		"files": 2,
 		"lines": 36,
 		"nosec": 0,
-		"found": 4
+		"found": 3
 	}
 }

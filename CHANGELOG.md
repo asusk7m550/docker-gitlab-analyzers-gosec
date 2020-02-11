@@ -1,5 +1,10 @@
 # Gosec analyzer changelog
 
+## v2.2.1
+- Use gosec v2.2.0
+- Use CWE mappings introduced in gosec v2.2.0
+- Change `compareKey` from `<file>:<code>:G-<gosec-rule-id>` to `<file>:<lineno>:<code>:CWE-<cweid>`
+
 ## v2.2.0
 - Build Docker image on top of securego/gosec:v2.1.0 (!21 @bartjkdp)
 

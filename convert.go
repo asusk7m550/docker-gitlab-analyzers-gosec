@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/issue"
+	"gitlab.com/gitlab-org/security-products/cwe-info-go"
 )
 
 const (
@@ -42,6 +43,21 @@ func convert(reader io.Reader, prependPath string) (*issue.Report, error) {
 	issues := []issue.Issue{}
 	for _, w := range doc.Issues {
 		r := Result{w, prependPath}
+		cwe, err := cweinfo.GetCweInfo(r.CWE.ID)
+
+		var title = ""
+		var description = ""
+
+		if err == nil {
+			title = cwe.Title
+			description = cwe.Description
+		} else {
+			// Use old RuleID as fallback as a precaution. This should not be necessary as all the gosec rules are
+			// mapped to CWEs
+			title = fmt.Sprintf("Gosec Rule %s", r.RuleID)
+			description = r.Details
+		}
+
 		if w.ConfidenceLevel() >= minLevel {
 			issues = append(issues, issue.Issue{
 				Category:    issue.CategorySast,
@@ -52,6 +68,8 @@ func convert(reader io.Reader, prependPath string) (*issue.Report, error) {
 				CompareKey:  r.CompareKey(),
 				Location:    r.Location(),
 				Identifiers: r.Identifiers(),
+				Name:        title,
+				Description: description,
 			})
 		}
 	}
@@ -89,7 +107,16 @@ func (r Result) Filepath() string {
 
 // CompareKey returns a string used to establish whether two issues are the same.
 func (r Result) CompareKey() string {
-	return strings.Join([]string{r.Filepath(), r.Code, r.RuleID}, ":")
+	_, err := cweinfo.GetCweInfo(r.CWE.ID)
+	var ruleID = ""
+	if err == nil {
+		ruleID = fmt.Sprintf("CWE-%s", r.CWE.ID)
+	} else {
+		// Use old RuleID as fallback as a precaution. This should not be necessary as all the gosec rules are
+		// mapped to CWEs
+		ruleID = r.RuleID
+	}
+	return strings.Join([]string{r.Filepath(), r.Line, r.Code, ruleID}, ":")
 }
 
 // Location returns a structured Location
@@ -103,16 +130,23 @@ func (r Result) Location() issue.Location {
 
 // Issue describes a vulnerability found in the source code.
 type Issue struct {
-	Severity   string `json:"severity"`
-	Confidence string `json:"confidence"`
-	RuleID     string `json:"rule_id"`
-	Details    string `json:"details"`
-	File       string `json:"file"`
-	Code       string `json:"code"`
-	Line       string `json:"line"`
+	Severity   string  `json:"severity"`
+	Confidence string  `json:"confidence"`
+	RuleID     string  `json:"rule_id"`
+	Details    string  `json:"details"`
+	File       string  `json:"file"`
+	Code       string  `json:"code"`
+	Line       string  `json:"line"`
+	CWE        CweInfo `json:"cwe"`
 }
 
-// ConfidenceLevel tunrs the confidence into an integer so that it can be compared.
+// CweInfo describes cwe information
+type CweInfo struct {
+	ID  string
+	URL string
+}
+
+// ConfidenceLevel turns the confidence into an integer so that it can be compared.
 func (i Issue) ConfidenceLevel() int {
 	switch i.Confidence {
 	case "LOW":
@@ -141,31 +175,38 @@ func Level(s string) issue.Level {
 	return issue.LevelUnknown
 }
 
-// Identifiers returns the normalized identifiers of the vulnerability.
+// Identifiers returns a list of identifiers.
 func (r Result) Identifiers() []issue.Identifier {
-	return []issue.Identifier{
-		r.GosecIdentifier(),
-	}
-}
+	var identifiers []issue.Identifier
 
-// GosecIdentifier returns a structured Identifier.
-func (r Result) GosecIdentifier() issue.Identifier {
-	identifier := issue.Identifier{
+	gosecIdentifier := issue.Identifier{
 		Type:  "gosec_rule_id",
 		Name:  fmt.Sprintf("Gosec Rule ID %s", r.RuleID),
 		Value: r.RuleID,
 	}
 
 	if url, ok := urls[r.RuleID]; ok {
-		identifier.URL = url
+		gosecIdentifier.URL = url
 	}
 
-	return identifier
+	identifiers = append(identifiers, gosecIdentifier)
+
+	cwe, err := cweinfo.GetCweInfo(r.Issue.CWE.ID)
+	if err == nil {
+		identifiers = append(identifiers, issue.Identifier{
+			Type:  "CWE",
+			Name:  fmt.Sprintf("CWE-%s", cwe.ID),
+			Value: cwe.ID,
+			URL:   fmt.Sprintf("https://cwe.mitre.org/data/definitions/%s.html", cwe.ID),
+		})
+	}
+
+	return identifiers
 }
 
 // URLs for select rules
 // Mapping to be replaced with https://github.com/securego/gosec/issues/127
-var urls = map[string]string {
+var urls = map[string]string{
 	"G101": "https://securego.io/docs/rules/g101.html",
 	"G102": "https://securego.io/docs/rules/g102.html",
 	"G103": "https://securego.io/docs/rules/g103.html",
