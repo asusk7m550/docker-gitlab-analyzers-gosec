@@ -1,6 +1,5 @@
 FROM golang:1.13 AS build
-# Force the go compiler to use modules
-ENV GO111MODULE=on CGO_ENABLED=0 GOOS=linux
+ENV CGO_ENABLED=0 GOOS=linux
 WORKDIR /go/src/app
 COPY . .
 RUN go build -o analyzer
