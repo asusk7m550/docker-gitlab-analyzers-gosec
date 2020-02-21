@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/issue"
-	"gitlab.com/gitlab-org/security-products/cwe-info-go"
+	cweinfo "gitlab.com/gitlab-org/security-products/cwe-info-go"
 )
 
 const (
@@ -63,8 +63,8 @@ func convert(reader io.Reader, prependPath string) (*issue.Report, error) {
 				Category:    issue.CategorySast,
 				Scanner:     scanner,
 				Message:     r.Details,
-				Severity:    Level(r.Severity),
-				Confidence:  Level(r.Confidence),
+				Severity:    SeverityLevel(r.Severity),
+				Confidence:  ConfidenceLevel(r.Confidence),
 				CompareKey:  r.CompareKey(),
 				Location:    r.Location(),
 				Identifiers: r.Identifiers(),
@@ -160,19 +160,34 @@ func (i Issue) ConfidenceLevel() int {
 	}
 }
 
-// Level returns the normalized severity or confidence.
-// Gosec provides same values for both properties.
+// ConfidenceLevel returns the normalized severity.
+// Gosec provides same values for both severity and confidence.
 // See https://github.com/securego/gosec/blob/893b87b34342eadd448aba7638c5cc25f7ad26dd/issue.go#L63-L73
-func Level(s string) issue.Level {
+func ConfidenceLevel(s string) issue.ConfidenceLevel {
 	switch s {
 	case "HIGH":
-		return issue.LevelHigh
+		return issue.ConfidenceLevelHigh
 	case "MEDIUM":
-		return issue.LevelMedium
+		return issue.ConfidenceLevelMedium
 	case "LOW":
-		return issue.LevelLow
+		return issue.ConfidenceLevelLow
 	}
-	return issue.LevelUnknown
+	return issue.ConfidenceLevelUnknown
+}
+
+// SeverityLevel returns the normalized severity.
+// Gosec provides same values for both severity and confidence.
+// See https://github.com/securego/gosec/blob/893b87b34342eadd448aba7638c5cc25f7ad26dd/issue.go#L63-L73
+func SeverityLevel(s string) issue.SeverityLevel {
+	switch s {
+	case "HIGH":
+		return issue.SeverityLevelHigh
+	case "MEDIUM":
+		return issue.SeverityLevelMedium
+	case "LOW":
+		return issue.SeverityLevelLow
+	}
+	return issue.SeverityLevelUnknown
 }
 
 // Identifiers returns a list of identifiers.

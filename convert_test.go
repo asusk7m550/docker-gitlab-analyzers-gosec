@@ -84,8 +84,8 @@ func TestConvert(t *testing.T) {
 						Message:     "Blacklisted import crypto/md5: weak cryptographic primitive",
 						Description: "The use of a broken or risky cryptographic algorithm is an unnecessary risk that may result in the exposure of sensitive information.",
 						CompareKey:  "app/main.go:15:\"crypto/md5\":CWE-327",
-						Severity:    issue.LevelMedium,
-						Confidence:  issue.LevelHigh,
+						Severity:    issue.SeverityLevelMedium,
+						Confidence:  issue.ConfidenceLevelHigh,
 						Location: issue.Location{
 							File:      "app/main.go",
 							LineStart: 15,
@@ -112,8 +112,8 @@ func TestConvert(t *testing.T) {
 						Message:     "Use of weak cryptographic primitive",
 						Description: "The software stores or transmits sensitive data using an encryption scheme that is theoretically sound, but is not strong enough for the level of protection required.",
 						CompareKey:  "app/main.go:11:md5.New():CWE-326",
-						Severity:    issue.LevelMedium,
-						Confidence:  issue.LevelHigh,
+						Severity:    issue.SeverityLevelMedium,
+						Confidence:  issue.ConfidenceLevelHigh,
 						Location: issue.Location{
 							File:      "app/main.go",
 							LineStart: 11,
@@ -140,8 +140,8 @@ func TestConvert(t *testing.T) {
 						Message:     "Use of math/big.Int.Exp function should be audited for modulus == 0",
 						Description: "Use of math/big.Int.Exp function should be audited for modulus == 0",
 						CompareKey:  "app/main.go:15:z.Exp(x, y, m):G105",
-						Severity:    issue.LevelLow,
-						Confidence:  issue.LevelHigh,
+						Severity:    issue.SeverityLevelLow,
+						Confidence:  issue.ConfidenceLevelHigh,
 						Location: issue.Location{
 							File:      "app/main.go",
 							LineStart: 15,
@@ -156,7 +156,8 @@ func TestConvert(t *testing.T) {
 						},
 					},
 				},
-				Remediations: []issue.Remediation{},
+				DependencyFiles: []issue.DependencyFile{},
+				Remediations:    []issue.Remediation{},
 			}
 			got, err := convert(r, "app")
 			if err != nil {
