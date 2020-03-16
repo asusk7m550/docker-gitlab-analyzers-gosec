@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.3.0
+- Add support for custom CA certs (!28)
+
 ## v2.2.1
 - Use gosec v2.2.0
 - Use CWE mappings introduced in gosec v2.2.0
