@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
+	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/cacert"
 	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/command"
 	"gitlab.com/gitlab-org/security-products/analyzers/gosec/v2/plugin"
 )
@@ -17,11 +18,12 @@ func main() {
 	app.Email = "gl-security-products@gitlab.com"
 
 	app.Commands = command.NewCommands(command.Config{
-		Match:        plugin.Match,
-		Analyze:      analyze,
-		AnalyzeFlags: analyzeFlags(),
-		AnalyzeAll:   true,
-		Convert:      convert,
+		Match:               plugin.Match,
+		Analyze:             analyze,
+		AnalyzeFlags:        analyzeFlags(),
+		AnalyzeAll:          true,
+		Convert:             convert,
+		CACertImportOptions: cacert.ImportOptions{Path: "/etc/ssl/certs/ca-certificates.crt"},
 	})
 
 	if err := app.Run(os.Args); err != nil {

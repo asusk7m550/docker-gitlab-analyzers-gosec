@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.5.0
+- Change location where custom CA certs are written (!30)
+
 ## v2.4.0
 - Add `id` field to vulnerabilities in JSON report (!31)
 
