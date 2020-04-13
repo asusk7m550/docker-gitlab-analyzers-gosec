@@ -39,7 +39,7 @@
       "name": "Key Exchange without Entity Authentication",
       "message": "Use of ssh InsecureIgnoreHostKey should be audited",
       "description": "The software performs a key exchange with an actor without verifying the identity of that actor.",
-      "cve": "app/xyz/foo.go:8:ssh.InsecureIgnoreHostKey():CWE-322",
+      "cve": "app/xyz/foo.go:9:ssh.InsecureIgnoreHostKey():CWE-322",
       "severity": "Medium",
       "confidence": "High",
       "scanner": {
@@ -48,7 +48,7 @@
       },
       "location": {
         "file": "app/xyz/foo.go",
-        "start_line": 8,
+        "start_line": 9,
         "dependency": {
           "package": {}
         }
