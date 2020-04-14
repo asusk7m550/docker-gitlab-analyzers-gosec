@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.4.0
+- Add `id` field to vulnerabilities in JSON report (!31)
+
 ## v2.3.0
 - Add support for custom CA certs (!28)
 
