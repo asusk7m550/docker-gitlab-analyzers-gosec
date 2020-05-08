@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.5.1
+- Use Alpine as builder image
+
 ## v2.5.0
 - Change location where custom CA certs are written (!30)
 
