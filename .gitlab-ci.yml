@@ -6,12 +6,3 @@ variables:
 
 include:
   - https://gitlab.com/gitlab-org/security-products/ci-templates/raw/master/includes-dev/analyzer.yml
-
-test-custom-ca-bundle:
-  variables:
-    BASE_IMAGE: $CI_REGISTRY_IMAGE/tmp:$CI_COMMIT_SHA
-    TARGET: test-gosec
-  trigger:
-    project: "gitlab-org/security-products/tests/custom-ca"
-    branch: master
-    strategy: depend
