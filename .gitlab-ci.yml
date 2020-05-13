@@ -6,3 +6,13 @@ variables:
 
 include:
   - https://gitlab.com/gitlab-org/security-products/ci-templates/raw/master/includes-dev/analyzer.yml
+
+go-qa:
+  extends: .qa-downstream-sast
+  trigger:
+    project: gitlab-org/security-products/tests/go
+
+go-modules-qa:
+  extends: .qa-downstream-sast
+  trigger:
+    project: gitlab-org/security-products/tests/go-modules
