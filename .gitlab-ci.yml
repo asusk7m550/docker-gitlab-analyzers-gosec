@@ -12,6 +12,12 @@ go-qa:
   trigger:
     project: gitlab-org/security-products/tests/go
 
+go-gosec-config-qa:
+  extends: .qa-downstream-sast
+  trigger:
+    project: gitlab-org/security-products/tests/go
+    branch: gosec-config-FREEZE
+
 go-modules-qa:
   extends: .qa-downstream-sast
   trigger:
