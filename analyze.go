@@ -5,7 +5,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"path"
+	"path/filepath"
 
 	"github.com/urfave/cli"
 )
@@ -34,7 +34,7 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	}
 
 	// Infer if Go modules need to be disabled.
-	_, err = os.Stat(path.Join(projectPath, "go.mod"))
+	_, err = os.Stat(filepath.Join(projectPath, "go.mod"))
 	if os.IsNotExist(err) {
 		fmt.Println("Could not find go.mod in project root. Disabling Go modules support by setting GO111MODULE=off.")
 		os.Setenv("GO111MODULE", "off")
@@ -61,11 +61,30 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 		return nil, err
 	}
 
+	// Set up basic gosec arguments
+	gosecArgs := []string{"-fmt=json", "-out=" + pathOutput, "./..."}
+
+	// Check if SAST_GOSEC_CONFIG is defined and points to a file
+	configFile := os.Getenv("SAST_GOSEC_CONFIG")
+	if configFile != "" {
+		configPath := filepath.Join(projectPath, configFile)
+
+		st, err := os.Stat(configPath)
+		if err != nil {
+			return nil, err
+		} else if st.IsDir() {
+			return nil, fmt.Errorf("%q is a directory", configPath)
+		}
+
+		// Prepend -conf PATH to the arguments for gosec
+		gosecArgs = append([]string{"-conf", configPath}, gosecArgs...)
+	}
+
 	// NOTE: Gosec exit with status 1 if some vulnerabilities have been found.
 	// This can be disabled by setting the -quiet flag but then
 	// Gosec returns no output when it can't find any vulnerability.
 	// See https://github.com/securego/gosec/blob/master/cmd/gosec/main.go
-	cmd = setupCmd(exec.Command(pathGosec, "-fmt=json", "-out="+pathOutput, "./..."))
+	cmd = setupCmd(exec.Command(pathGosec, gosecArgs...))
 	cmd.Dir = pathGoPkg
 	cmd.Run()
 	return os.Open(pathOutput)

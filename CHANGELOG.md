@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.6.0
+- Add support for specifying a `gosec` configuration file with `SAST_GOSEC_CONFIG` (!19 @firelizzard)
+
 ## v2.5.1
 - Use Alpine as builder image (!33)
 
