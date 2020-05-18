@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.6.2
+- Drop securego base docker image in favor of packaging gosec binary (!39)
+
 ## v2.6.1
 - Remove `location.dependency` from the generated SAST report (!41)
 
