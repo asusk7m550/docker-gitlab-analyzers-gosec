@@ -15,10 +15,7 @@
       },
       "location": {
         "file": "app/main.go",
-        "start_line": 16,
-        "dependency": {
-          "package": {}
-        }
+        "start_line": 16
       },
       "identifiers": [
         {
@@ -48,10 +45,7 @@
       },
       "location": {
         "file": "app/xyz/foo.go",
-        "start_line": 9,
-        "dependency": {
-          "package": {}
-        }
+        "start_line": 9
       },
       "identifiers": [
         {
@@ -81,10 +75,7 @@
       },
       "location": {
         "file": "app/main.go",
-        "start_line": 18,
-        "dependency": {
-          "package": {}
-        }
+        "start_line": 18
       },
       "identifiers": [
         {
