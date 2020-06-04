@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.6.1
+- Remove `location.dependency` from the generated SAST report (!41)
+
 ## v2.6.0
 - Add support for specifying a `gosec` configuration file with `SAST_GOSEC_CONFIG` (!19 @firelizzard)
 
