@@ -7,6 +7,8 @@ import (
 	"os/exec"
 	"path/filepath"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/urfave/cli"
 )
 
@@ -40,6 +42,7 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	// to some directory under $GOPATH/src.
 	// TODO: make it possible to specify the exact path of the package.
 	// FIXME: this copy should be necessary when go modules are disabled
+	log.Info("Copying modules into path...")
 	cmd = setupCmd(exec.Command("cp", "-r", projectPath, pathGoPkg))
 	err = cmd.Run()
 	if err != nil {
@@ -47,6 +50,7 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	}
 
 	// Gosec needs the dependency to be fetched.
+	log.Info("Fetching dependencies...")
 	cmd = setupCmd(exec.Command("go", "get", "./..."))
 	cmd.Dir = pathGoPkg
 	err = cmd.Run()
@@ -73,6 +77,7 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 		gosecArgs = append([]string{"-conf", configPath}, gosecArgs...)
 	}
 
+	log.Info("Running gosec...")
 	// NOTE: Gosec exit with status 1 if some vulnerabilities have been found.
 	// This can be disabled by setting the -quiet flag but then
 	// Gosec returns no output when it can't find any vulnerability.

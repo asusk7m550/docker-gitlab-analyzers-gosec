@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.7.0
+ - Update logging to use commonutil (!42)
+
 ## v2.6.2
 - Drop securego base docker image in favor of packaging gosec binary (!39)
 

@@ -1,14 +1,20 @@
 package main
 
 import (
-	"log"
 	"os"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/urfave/cli"
 	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/cacert"
 	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/command"
+	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/logutil"
 	"gitlab.com/gitlab-org/security-products/analyzers/gosec/v2/plugin"
 )
+
+func init() {
+	log.SetFormatter(&logutil.Formatter{Project: "gosec"})
+}
 
 func main() {
 	app := cli.NewApp()
