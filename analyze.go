@@ -33,13 +33,6 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 		return cmd
 	}
 
-	// Infer if Go modules need to be disabled.
-	_, err = os.Stat(filepath.Join(projectPath, "go.mod"))
-	if os.IsNotExist(err) {
-		fmt.Println("Could not find go.mod in project root. Disabling Go modules support by setting GO111MODULE=off.")
-		os.Setenv("GO111MODULE", "off")
-	}
-
 	// We don't control the directory where the source code is mounted
 	// but Go requires the code to be within $GOPATH.
 	// We could create a symlink but that wouldn't work with Gosec,
@@ -87,5 +80,8 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	cmd = setupCmd(exec.Command(pathGosec, gosecArgs...))
 	cmd.Dir = pathGoPkg
 	cmd.Run()
+	if err != nil {
+		return nil, err
+	}
 	return os.Open(pathOutput)
 }
