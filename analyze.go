@@ -13,15 +13,23 @@ import (
 )
 
 const (
-	pathPkg    = "app"
-	pathGoSrc  = "/go/src"
-	pathGoPkg  = pathGoSrc + "/" + pathPkg
-	pathOutput = "/tmp/gosec.json"
-	pathGosec  = "/bin/gosec"
+	pathPkg           = "app"
+	pathGoSrc         = "/go/src"
+	pathGoPkg         = pathGoSrc + "/" + pathPkg
+	pathOutput        = "/tmp/gosec.json"
+	pathGosec         = "/bin/gosec"
+	envVarGoSecConfig = "SAST_GOSEC_CONFIG"
+	flagGoSecConfig   = "gosec-config"
 )
 
 func analyzeFlags() []cli.Flag {
-	return []cli.Flag{}
+	return []cli.Flag{
+		cli.StringFlag{
+			Name: flagGoSecConfig,
+			Usage: "Relative path to a gosec config file",
+			EnvVar: envVarGoSecConfig,
+		},
+	}
 }
 
 func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
@@ -62,7 +70,7 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	gosecArgs := []string{"-fmt=json", "-out=" + pathOutput, "./..."}
 
 	// Check if SAST_GOSEC_CONFIG is defined and points to a file
-	configFile := os.Getenv("SAST_GOSEC_CONFIG")
+	configFile := c.String(flagGoSecConfig)
 	if configFile != "" {
 		configPath := filepath.Join(projectPath, configFile)
 
