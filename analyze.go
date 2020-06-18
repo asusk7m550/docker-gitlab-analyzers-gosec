@@ -25,8 +25,8 @@ const (
 func analyzeFlags() []cli.Flag {
 	return []cli.Flag{
 		cli.StringFlag{
-			Name: flagGoSecConfig,
-			Usage: "Relative path to a gosec config file",
+			Name:   flagGoSecConfig,
+			Usage:  "Relative path to a gosec config file",
 			EnvVar: envVarGoSecConfig,
 		},
 	}
@@ -38,8 +38,6 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 
 	var setupCmd = func(cmd *exec.Cmd) *exec.Cmd {
 		cmd.Env = os.Environ()
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
 		return cmd
 	}
 
@@ -52,7 +50,8 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	// FIXME: this copy should be necessary when go modules are disabled
 	log.Info("Copying modules into path...")
 	cmd = setupCmd(exec.Command("cp", "-r", projectPath, pathGoPkg))
-	err = cmd.Run()
+	output, err := cmd.CombinedOutput()
+	log.Debugf("Copy output: \n%s", output)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +60,8 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	log.Info("Fetching dependencies...")
 	cmd = setupCmd(exec.Command("go", "get", "./..."))
 	cmd.Dir = pathGoPkg
-	err = cmd.Run()
+	output, err = cmd.CombinedOutput()
+	log.Debugf("Fetch output:\n%s", output)
 	if err != nil {
 		return nil, err
 	}
@@ -86,14 +86,12 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	}
 
 	log.Info("Running gosec...")
-	// NOTE: Gosec exit with status 1 if some vulnerabilities have been found.
-	// This can be disabled by setting the -quiet flag but then
-	// Gosec returns no output when it can't find any vulnerability.
-	// See https://github.com/securego/gosec/blob/master/cmd/gosec/main.go
 	cmd = setupCmd(exec.Command(pathGosec, gosecArgs...))
 	cmd.Dir = pathGoPkg
-	cmd.Run()
-	if err != nil {
+	output, err = cmd.CombinedOutput()
+	log.Debugf("gosec output:\n%s", output)
+	// NOTE: Gosec exit with status 1 if some vulnerabilities have been found.
+	if err != nil && cmd.ProcessState.ExitCode() > 1 {
 		return nil, err
 	}
 	return os.Open(pathOutput)
