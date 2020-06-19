@@ -1,5 +1,9 @@
 # Gosec analyzer changelog
 
+## v2.8.1
+- Update common version to latest (!45)
+- Check gosec exit status and exit with error if not 0 or 1 (!45)
+
 ## v2.8.0
 - Update Docker image to use golang 1.14 (!46)
 
@@ -7,7 +11,7 @@
  - Change GoSec external configuration reading from os.env to cli flag (!43)
 
 ## v2.7.0
- - Update logging to use commonutil (!42)
+- Update logging to use commonutil (!42)
 
 ## v2.6.2
 - Drop securego base docker image in favor of packaging gosec binary (!39)
