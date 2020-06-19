@@ -1,8 +1,11 @@
 # Gosec analyzer changelog
 
+## v2.8.0
+- Update Docker image to use golang 1.14 (!46)
+
 ## v2.7.1
- - Change GoSec external configuration reading from os.env to cli flag (!43)  
- 
+ - Change GoSec external configuration reading from os.env to cli flag (!43)
+
 ## v2.7.0
  - Update logging to use commonutil (!42)
 

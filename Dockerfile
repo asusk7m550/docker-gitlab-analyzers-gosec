@@ -1,4 +1,4 @@
-FROM golang:1.13-alpine AS build
+FROM golang:1.14-alpine AS build
 
 ARG GOSEC_VERSION=2.2.0
 ARG GOSEC_SHA1SUM=3937ba8b4c0671b1dba3adc23bc3cfc2fe455cc4
@@ -19,7 +19,7 @@ RUN tar xf /tmp/gosec.tar.gz && \
   mv gosec /bin/gosec
 
 # Create new base container with a clean $GOPATH
-FROM golang:1.13-alpine AS base
+FROM golang:1.14-alpine AS base
 
 RUN apk --no-cache add git ca-certificates gcc libc-dev
 
