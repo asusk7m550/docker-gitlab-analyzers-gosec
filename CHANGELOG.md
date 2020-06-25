@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.8.2
+- Update common to provide more info-level logging (!30)
+
 ## v2.8.1
 - Update common version to latest (!45)
 - Check gosec exit status and exit with error if not 0 or 1 (!45)
