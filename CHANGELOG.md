@@ -1,7 +1,10 @@
 # Gosec analyzer changelog
 
+## v2.8.3
+- Update Debug output to give a better description of command that was ran (!48)
+
 ## v2.8.2
-- Update common to provide more info-level logging (!30)
+- Update common to provide more info-level logging (!47)
 
 ## v2.8.1
 - Update common version to latest (!45)
