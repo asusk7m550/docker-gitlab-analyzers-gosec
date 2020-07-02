@@ -51,7 +51,7 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	log.Info("Copying modules into path...")
 	cmd = setupCmd(exec.Command("cp", "-r", projectPath, pathGoPkg))
 	output, err := cmd.CombinedOutput()
-	log.Debugf("Copy output: \n%s", output)
+	log.Debugf("%s\n%s", cmd.String(), output)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +61,7 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	cmd = setupCmd(exec.Command("go", "get", "./..."))
 	cmd.Dir = pathGoPkg
 	output, err = cmd.CombinedOutput()
-	log.Debugf("Fetch output:\n%s", output)
+	log.Debugf("%s\n%s", cmd.String(), output)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +89,7 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 	cmd = setupCmd(exec.Command(pathGosec, gosecArgs...))
 	cmd.Dir = pathGoPkg
 	output, err = cmd.CombinedOutput()
-	log.Debugf("gosec output:\n%s", output)
+	log.Debugf("%s\n%s", cmd.String(), output)
 	// NOTE: Gosec exit with status 1 if some vulnerabilities have been found.
 	if err != nil && cmd.ProcessState.ExitCode() > 1 {
 		return nil, err
