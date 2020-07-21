@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.9.0
+- Switch to the MIT Expat license (!49)
+
 ## v2.8.4
 - Use gosec v2.3.0 (!50)
 
