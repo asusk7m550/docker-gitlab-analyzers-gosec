@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.8.4
+- Use gosec v2.3.0 (!50)
+
 ## v2.8.3
 - Update Debug output to give a better description of command that was ran (!48)
 
