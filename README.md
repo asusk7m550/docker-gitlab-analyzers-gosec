@@ -15,4 +15,4 @@ Contributions are welcome, see [`CONTRIBUTING.md`](CONTRIBUTING.md) for more det
 
 ## License
 
-This code is distributed under the GitLab Enterprise Edition (EE) license, see the [LICENSE](LICENSE) file.
+This code is distributed under the MIT Expat license, see the [LICENSE](LICENSE) file.
