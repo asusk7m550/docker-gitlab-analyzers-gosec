@@ -1,0 +1,69 @@
+{
+    "version": "2.4",
+    "vulnerabilities": [
+      {
+        "id": "ff242d4b29aa1113a3d2bb16259253f4e03e6f21fb2cc79297b4d820befcb560",
+        "category": "sast",
+        "name": "Key Exchange without Entity Authentication",
+        "message": "Use of ssh InsecureIgnoreHostKey should be audited",
+        "description": "The software performs a key exchange with an actor without verifying the identity of that actor.",
+        "cve": "foo.go:8:ssh.InsecureIgnoreHostKey():CWE-322",
+        "severity": "Medium",
+        "confidence": "High",
+        "scanner": {
+          "id": "gosec",
+          "name": "Gosec"
+        },
+        "location": {
+          "file": "foo.go",
+          "start_line": 8
+        },
+        "identifiers": [
+          {
+            "type": "gosec_rule_id",
+            "name": "Gosec Rule ID G106",
+            "value": "G106"
+          },
+          {
+            "type": "CWE",
+            "name": "CWE-322",
+            "value": "322",
+            "url": "https://cwe.mitre.org/data/definitions/322.html"
+          }
+        ]
+      },
+      {
+        "id": "af561110c010315a3e1aba0174ec5d8025c43a2eff7089e211e9ed2aac4060c3",
+        "category": "sast",
+        "name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+        "message": "this method will not auto-escape HTML. Verify data is well formed.",
+        "description": "The software does not neutralize or incorrectly neutralizes user-controllable input before it is placed in output that is used as a web page that is served to other users.",
+        "cve": "main.go:20:template.HTML(a):CWE-79",
+        "severity": "Medium",
+        "confidence": "Low",
+        "scanner": {
+          "id": "gosec",
+          "name": "Gosec"
+        },
+        "location": {
+          "file": "main.go",
+          "start_line": 20
+        },
+        "identifiers": [
+          {
+            "type": "gosec_rule_id",
+            "name": "Gosec Rule ID G203",
+            "value": "G203"
+          },
+          {
+            "type": "CWE",
+            "name": "CWE-79",
+            "value": "79",
+            "url": "https://cwe.mitre.org/data/definitions/79.html"
+          }
+        ]
+      }
+    ],
+    "remediations": []
+  }
+  

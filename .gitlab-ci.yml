@@ -7,18 +7,31 @@ variables:
 include:
   - https://gitlab.com/gitlab-org/security-products/ci-templates/raw/master/includes-dev/analyzer.yml
 
+.qa-downstream-sast:
+  variables:
+    SAST_DEFAULT_ANALYZERS: "gosec"
+    # TODO drop this as a part of https://gitlab.com/gitlab-org/gitlab/-/issues/220540#implementation-plan
+    SAST_DISABLE_DIND: "true"
+
 go-qa:
   extends: .qa-downstream-sast
   trigger:
     project: gitlab-org/security-products/tests/go
+    branch: no_dind-FREEZE
 
 go-gosec-config-qa:
   extends: .qa-downstream-sast
+  variables:
+    SAST_GOSEC_CONFIG: gosec-config.json
+    SAST_REPORT_URL: "$CI_PROJECT_URL/raw/$CI_COMMIT_REF_NAME/test/expect/gosec-config/gl-sast-report.json"
   trigger:
     project: gitlab-org/security-products/tests/go
-    branch: gosec-config-FREEZE
+    branch: no_dind-FREEZE
 
 go-modules-qa:
   extends: .qa-downstream-sast
+  variables:
+    DS_DEFAULT_ANALYZERS: ""
   trigger:
     project: gitlab-org/security-products/tests/go-modules
+    branch: no_dind-FREEZE
