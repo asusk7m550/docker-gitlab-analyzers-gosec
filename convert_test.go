@@ -69,8 +69,8 @@ func TestConvert(t *testing.T) {
 			}`
 
 			var scanner = issue.Scanner{
-				ID:   scannerID,
-				Name: scannerName,
+				ID:   "gosec",
+				Name: "Gosec",
 			}
 
 			r := strings.NewReader(in)

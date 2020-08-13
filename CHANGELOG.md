@@ -1,5 +1,8 @@
 # Gosec analyzer changelog
 
+## v2.10.0
+- Add scan object to report (!54)
+
 ## v2.9.0
 - Switch to the MIT Expat license (!49)
 

@@ -10,12 +10,8 @@ import (
 	"strings"
 
 	"gitlab.com/gitlab-org/security-products/analyzers/common/v2/issue"
+	"gitlab.com/gitlab-org/security-products/analyzers/gosec/v2/metadata"
 	cweinfo "gitlab.com/gitlab-org/security-products/cwe-info-go"
-)
-
-const (
-	scannerID   = "gosec"
-	scannerName = "Gosec"
 )
 
 // This tool was previously named GO_AST_SCANNER.
@@ -34,11 +30,6 @@ func convert(reader io.Reader, prependPath string) (*issue.Report, error) {
 	}
 
 	minLevel := minConfidenceLevel() // TODO: extract level from cli context
-
-	var scanner = issue.Scanner{
-		ID:   scannerID,
-		Name: scannerName,
-	}
 
 	issues := []issue.Issue{}
 	for _, w := range doc.Issues {
@@ -60,8 +51,8 @@ func convert(reader io.Reader, prependPath string) (*issue.Report, error) {
 
 		if w.ConfidenceLevel() >= minLevel {
 			issues = append(issues, issue.Issue{
-				Category:    issue.CategorySast,
-				Scanner:     scanner,
+				Category:    metadata.Type,
+				Scanner:     metadata.IssueScanner,
 				Message:     r.Details,
 				Severity:    SeverityLevel(r.Severity),
 				Confidence:  ConfidenceLevel(r.Confidence),
