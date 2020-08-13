@@ -93,5 +93,17 @@
       ]
     }
   ],
-  "remediations": []
+  "remediations": [],
+  "scan": {
+    "scanner": {
+      "id": "gosec",
+      "name": "Gosec",
+      "url": "https://github.com/securego/gosec",
+      "vendor": {
+        "name": "GitLab"
+      },
+      "version": "2.3.0"
+    },
+    "type": "sast"
+  }
 }
