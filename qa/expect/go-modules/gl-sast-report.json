@@ -1,0 +1,144 @@
+{
+  "version": "3.0",
+  "vulnerabilities": [
+    {
+      "id": "d92426da753aa6e667885f9e55a7e99bf547ff9e23777d24a7a376380300b2e0",
+      "category": "sast",
+      "name": "Inadequate Encryption Strength",
+      "message": "Use of weak cryptographic primitive",
+      "description": "The software stores or transmits sensitive data using an encryption scheme that is theoretically sound, but is not strong enough for the level of protection required.",
+      "cve": "main.go:14:md5.New():CWE-326",
+      "severity": "Medium",
+      "confidence": "High",
+      "scanner": {
+        "id": "gosec",
+        "name": "Gosec"
+      },
+      "location": {
+        "file": "main.go",
+        "start_line": 14
+      },
+      "identifiers": [
+        {
+          "type": "gosec_rule_id",
+          "name": "Gosec Rule ID G401",
+          "value": "G401"
+        },
+        {
+          "type": "CWE",
+          "name": "CWE-326",
+          "value": "326",
+          "url": "https://cwe.mitre.org/data/definitions/326.html"
+        }
+      ]
+    },
+    {
+      "id": "878d24adf2c261f620c4e20a9e81c7200b26737b4d30291e2f80b7a0f55073e3",
+      "category": "sast",
+      "name": "Use of a Broken or Risky Cryptographic Algorithm",
+      "message": "Blacklisted import crypto/md5: weak cryptographic primitive",
+      "description": "The use of a broken or risky cryptographic algorithm is an unnecessary risk that may result in the exposure of sensitive information.",
+      "cve": "main.go:5:\"crypto/md5\":CWE-327",
+      "severity": "Medium",
+      "confidence": "High",
+      "scanner": {
+        "id": "gosec",
+        "name": "Gosec"
+      },
+      "location": {
+        "file": "main.go",
+        "start_line": 5
+      },
+      "identifiers": [
+        {
+          "type": "gosec_rule_id",
+          "name": "Gosec Rule ID G501",
+          "value": "G501"
+        },
+        {
+          "type": "CWE",
+          "name": "CWE-327",
+          "value": "327",
+          "url": "https://cwe.mitre.org/data/definitions/327.html"
+        }
+      ]
+    },
+    {
+      "id": "72ce360acbea3455b0e92f724e723032f5a799da15efe0f854e01af0f401c7f1",
+      "category": "sast",
+      "name": "Improper Check or Handling of Exceptional Conditions",
+      "message": "Errors unhandled.",
+      "description": "The software does not properly anticipate or handle exceptional conditions that rarely occur during normal operation of the software.",
+      "cve": "main.go:16:m.Write([]byte(str)):CWE-703",
+      "severity": "Low",
+      "confidence": "High",
+      "scanner": {
+        "id": "gosec",
+        "name": "Gosec"
+      },
+      "location": {
+        "file": "main.go",
+        "start_line": 16
+      },
+      "identifiers": [
+        {
+          "type": "gosec_rule_id",
+          "name": "Gosec Rule ID G104",
+          "value": "G104",
+          "url": "https://securego.io/docs/rules/g104.html"
+        },
+        {
+          "type": "CWE",
+          "name": "CWE-703",
+          "value": "703",
+          "url": "https://cwe.mitre.org/data/definitions/703.html"
+        }
+      ]
+    },
+    {
+      "id": "4efabbda46b817a56b8e3c5f82609b2d642d305929485dc77f9faee8d5a6c930",
+      "category": "sast",
+      "name": "Improper Check or Handling of Exceptional Conditions",
+      "message": "Errors unhandled.",
+      "description": "The software does not properly anticipate or handle exceptional conditions that rarely occur during normal operation of the software.",
+      "cve": "main.go:22:cm.Write([]byte(str)):CWE-703",
+      "severity": "Low",
+      "confidence": "High",
+      "scanner": {
+        "id": "gosec",
+        "name": "Gosec"
+      },
+      "location": {
+        "file": "main.go",
+        "start_line": 22
+      },
+      "identifiers": [
+        {
+          "type": "gosec_rule_id",
+          "name": "Gosec Rule ID G104",
+          "value": "G104",
+          "url": "https://securego.io/docs/rules/g104.html"
+        },
+        {
+          "type": "CWE",
+          "name": "CWE-703",
+          "value": "703",
+          "url": "https://cwe.mitre.org/data/definitions/703.html"
+        }
+      ]
+    }
+  ],
+  "remediations": [],
+  "scan": {
+    "scanner": {
+      "id": "gosec",
+      "name": "Gosec",
+      "url": "https://github.com/securego/gosec",
+      "vendor": {
+        "name": "GitLab"
+      },
+      "version": "2.3.0"
+    },
+    "type": "sast"
+  }
+}
