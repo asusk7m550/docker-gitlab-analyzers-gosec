@@ -58,7 +58,7 @@ func analyze(c *cli.Context, projectPath string) (io.ReadCloser, error) {
 
 	// Gosec needs the dependency to be fetched.
 	log.Info("Fetching dependencies...")
-	cmd = setupCmd(exec.Command("go", "get", "./..."))
+	cmd = setupCmd(exec.Command("go", "get", "-tags musl", "./..."))
 	cmd.Dir = pathGoPkg
 	output, err = cmd.CombinedOutput()
 	log.Debugf("%s\n%s", cmd.String(), output)
