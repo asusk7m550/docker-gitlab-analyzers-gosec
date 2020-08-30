@@ -23,7 +23,15 @@ RUN tar xf /tmp/gosec.tar.gz && \
 # Create new base container with a clean $GOPATH
 FROM golang:$GO_VERSION-alpine AS base
 
-RUN apk --no-cache add git ca-certificates gcc libc-dev
+# Install some packages
+RUN apk --no-cache add git ca-certificates gcc libc-dev pkgconf g++ bash make
+
+# Build kafka
+RUN git clone https://github.com/edenhill/librdkafka.git && cd librdkafka/ && ./configure --prefix /usr && make && make install && cd && rm -rf librdkafka
+
+# Download kafka for golang
+RUN go get -tags musl -u gopkg.in/confluentinc/confluent-kafka-go.v1/kafka
+
 
 COPY --from=build /analyzer /analyzer
 COPY --from=build /bin/gosec /bin/gosec
