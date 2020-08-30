@@ -9,6 +9,8 @@ shared by all analyzers.
 The [common library](https://gitlab.com/gitlab-org/security-products/analyzers/common)
 contains documentation on how to run, test and modify this analyzer.
 
+This analyzer has the kafka library added.
+
 ## Contributing
 
 Contributions are welcome, see [`CONTRIBUTING.md`](CONTRIBUTING.md) for more details.
